@@ -1,0 +1,25 @@
+# Spring Boot specific files to ignore
+target/
+*.class
+*.log
+*.jar
+
+# IDE files to ignore
+.idea/
+*.iml
+*.ipr
+*.iws
+*.classpath
+*.project
+*.settings/
+
+# Gradle files to ignore
+.gradle/
+build/
+
+# Maven files to ignore
+.mvn/
+mvnw
+mvnw.cmd
+
+target/
