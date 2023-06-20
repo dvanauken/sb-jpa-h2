@@ -4,6 +4,10 @@
 - [Angular Front-end](https://github.com/dvanauken/angular)
 - [React Front-end](https://github.com/dvanauken/react)
 
+The project includes a SQL file, [userdb.sql](https://github.com/dvanauken/sb-jpa-h2/blob/main/userdb.sql), which provides the Data Definition Language (DDL) for setting up the necessary database structure.
+
+
+
 ## Technologies Used
 - Java 18
 - Spring Boot 3
