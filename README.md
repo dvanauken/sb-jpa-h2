@@ -1,5 +1,3 @@
-# sb-jpa-h2
-
 ## Overview
 `sb-jpa-h2` is a Java-based project that utilizes Spring Boot, JPA (Java Persistence API), and H2 database. This project serves as a basic template for developing and testing Java applications with these technologies. It provides a REST API that can be used with two different front-end applications:
 
