@@ -49,17 +49,14 @@ create table APP_USER
 
 create table ROLE
 (
-    ID   BIGINT auto_increment
-        primary key,
+    ID   BIGINT auto_increment primary key,
     NAME CHARACTER VARYING(1000000000)
 );
 
 create table ROLE_USER
 (
-    ROLE_ID INTEGER not null
-        references ROLE,
-    USER_ID INTEGER not null
-        references APP_USER,
+    ROLE_ID INTEGER not null references ROLE,
+    USER_ID INTEGER not null references APP_USER,
     primary key (ROLE_ID, USER_ID)
 );
 
