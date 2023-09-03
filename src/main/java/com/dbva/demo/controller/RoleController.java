@@ -22,11 +22,18 @@ public class RoleController {
     public ResponseEntity<List<Role>> getAllRoles(@RequestParam(required = false) String name) {
         try {
             List<Role> roles = new ArrayList<Role>();
-
             if (name == null)
                 roleRepository.findAll().forEach(roles::add);
             else
                 roleRepository.findByNameContainingIgnoreCase(name).forEach(roles::add);
+
+            /**
+             * roles::add is a method reference that is equivalent to role -> roles.add(role)
+             * .forEach(roles::add); is equivalent to
+             * for (Role role : roleRepository.findAll()) {
+             *     roles.add(role);
+             * }
+             */
 
             if (roles.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);

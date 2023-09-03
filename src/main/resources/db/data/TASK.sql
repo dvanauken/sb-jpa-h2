@@ -1,0 +1,8 @@
+insert into PUBLIC.TASK (ID, NAME, DESCRIPTION, TYPE, PARENT_ID, STATUS, START_DATE, END_DATE, SEQUENCE, ASSIGNED_TO) values (1, 'Construct Kitchen Cabinets', 'Construct Kitchen Cabinets', 'WIP', null, '', '2022-12-19', '2023-01-02', null, null);
+insert into PUBLIC.TASK (ID, NAME, DESCRIPTION, TYPE, PARENT_ID, STATUS, START_DATE, END_DATE, SEQUENCE, ASSIGNED_TO) values (2, 'Construct Corner Cabinet 1', 'Construct Corner Cabinet 1', 'WIP', 1, null, '2022-12-24', '2022-12-28', 1, null);
+insert into PUBLIC.TASK (ID, NAME, DESCRIPTION, TYPE, PARENT_ID, STATUS, START_DATE, END_DATE, SEQUENCE, ASSIGNED_TO) values (3, 'Construct Corner Cabinet 2', 'Construct Corner Cabinet 2', 'WIP', 1, null, '2022-12-24', '2022-12-23', 2, null);
+insert into PUBLIC.TASK (ID, NAME, DESCRIPTION, TYPE, PARENT_ID, STATUS, START_DATE, END_DATE, SEQUENCE, ASSIGNED_TO) values (4, 'W30', 'W30', 'WIP', 1, null, '2022-12-26', '2022-12-26', 3, null);
+insert into PUBLIC.TASK (ID, NAME, DESCRIPTION, TYPE, PARENT_ID, STATUS, START_DATE, END_DATE, SEQUENCE, ASSIGNED_TO) values (23, 'W18', 'W18', 'WIP', 1, null, '2022-12-26', '2022-12-26', 4, null);
+insert into PUBLIC.TASK (ID, NAME, DESCRIPTION, TYPE, PARENT_ID, STATUS, START_DATE, END_DATE, SEQUENCE, ASSIGNED_TO) values (24, 'W24', 'W24', 'WIP', 1, null, '2022-12-26', '2022-12-26', 5, null);
+insert into PUBLIC.TASK (ID, NAME, DESCRIPTION, TYPE, PARENT_ID, STATUS, START_DATE, END_DATE, SEQUENCE, ASSIGNED_TO) values (25, 'W27', 'W27', '', 1, null, '2022-12-26', '2022-12-26', 6, null);
+insert into PUBLIC.TASK (ID, NAME, DESCRIPTION, TYPE, PARENT_ID, STATUS, START_DATE, END_DATE, SEQUENCE, ASSIGNED_TO) values (34, 'W36', 'Sink Base', 'WIP', 1, null, '2022-12-26', '2022-12-26', 7, null);

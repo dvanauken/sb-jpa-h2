@@ -1,6 +1,7 @@
 package com.dbva.demo.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import com.dbva.demo.repository.AppUserRepository;
@@ -9,6 +10,8 @@ import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
+import org.springframework.data.jpa.convert.QueryByExamplePredicateBuilder;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,22 +25,6 @@ public class AppUserController {
     private static final Logger logger = LoggerFactory.getLogger(AppUserController.class);
     @Autowired
     AppUserRepository appUserRepository;
-
-//    @GetMapping("/app-users")
-//    public ResponseEntity<List<AppUser>> getAllAppUsers() {
-//        try {
-//            List<AppUser> appUsers = new ArrayList<AppUser>();
-//            appUserRepository.findAll().forEach(appUsers::add);
-//
-//            if (appUsers.isEmpty()) {
-//                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//            }
-//
-//            return new ResponseEntity<>(appUsers, HttpStatus.OK);
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
 
     @GetMapping("/app-users")
     public ResponseEntity<List<AppUser>> getAllAppUsers(
@@ -150,13 +137,111 @@ public class AppUserController {
             if (pageUsers.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-            return new ResponseEntity<>(pageUsers.getContent(), HttpStatus.OK);
-
+            else{
+                return new ResponseEntity<>(pageUsers.getContent(), HttpStatus.OK);
+            }
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+//    @GetMapping("/test")
+//    public ResponseEntity<List<AppUser>> test() {
+//        Specification<AppUser> hasAgeLessThan65 = (user, cq, cb) -> cb.lessThan(user.get("age"), 65);
+//        List<AppUser> users = appUserRepository.findAll(hasAgeLessThan65);
+//        if (users.isEmpty()) {
+//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        }
+//        else{
+//            return new ResponseEntity<>(users, HttpStatus.OK);
+//        }
+//    }
+
+    @GetMapping("/test")
+    public ResponseEntity<List<AppUser>> test() {
+        // Create an example user with the properties you want to match on
+        AppUser exampleUser = new AppUser();
+        exampleUser.setGender("Male");
+
+        // Create an ExampleMatcher ignoring the age field
+        ExampleMatcher matcher = ExampleMatcher.matching().withIgnorePaths("age");
+
+        // Create an Example instance from the example user and the matcher
+        Example<AppUser> example = Example.of(exampleUser, matcher);
+
+        // Create a Specification that matches users with age less than 65
+        Specification<AppUser> hasAgeLessThan65 = (user, cq, cb) -> cb.lessThan(user.get("age"), 65);
+
+        // Combine the age specification with a specification created from the example
+        Specification<AppUser> combinedSpec = Specification.where(hasAgeLessThan65).and((root, query, cb) -> {
+            return QueryByExamplePredicateBuilder.getPredicate(root, cb, example);
+        });
+
+        // Find all users that match the combined specification
+        List<AppUser> users = appUserRepository.findAll(combinedSpec);
+
+        // Return the users if found, otherwise return no content
+        if (users.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        }
+    }
+
+    @GetMapping("/test2")
+    public ResponseEntity<List<AppUser>> test2(@RequestParam String surname, @RequestParam int age) {
+        // Create an example user with the properties you want to match on
+        AppUser exampleUser = new AppUser();
+        exampleUser.setSurname(surname);
+
+        // Create an ExampleMatcher ignoring the age field
+        ExampleMatcher matcher = ExampleMatcher.matching().withIgnorePaths("age");
+
+        // Create an Example instance from the example user and the matcher
+        Example<AppUser> example = Example.of(exampleUser, matcher);
+
+        // Create a Specification that matches users with age greater than the specified age
+        Specification<AppUser> hasAgeGreaterThan = (user, cq, cb) -> cb.greaterThan(user.get("age"), age);
+
+        // Combine the age specification with a specification created from the example
+        Specification<AppUser> combinedSpec = Specification.where(hasAgeGreaterThan).and((root, query, cb) -> {
+            return QueryByExamplePredicateBuilder.getPredicate(root, cb, example);
+        });
+
+        // Find all users that match the combined specification
+        List<AppUser> users = appUserRepository.findAll(combinedSpec);
+
+        // Return the users if found, otherwise return no content
+        if (users.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        }
+    }
+
+    @GetMapping("/test3")
+    public ResponseEntity<List<AppUser>> test3(@RequestParam Map<String, String> fields) {
+        // Create a Specification that matches users based on the specified fields
+        Specification<AppUser> spec = Specification.where(null);
+
+        for (Map.Entry<String, String> field : fields.entrySet()) {
+            String fieldName = field.getKey();
+            String fieldValue = field.getValue();
+
+            // Add a condition to the Specification for each field
+            spec = spec.and((user, cq, cb) -> cb.equal(user.get(fieldName), fieldValue));
+        }
+
+        // Find all users that match the Specification
+        List<AppUser> users = appUserRepository.findAll(spec);
+
+        // Return the users if found, otherwise return no content
+        if (users.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        }
+    }
 
     @GetMapping("/app-users/{id}")
     public ResponseEntity<AppUser> getAppUserById(@PathVariable("id") long id) {
