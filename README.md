@@ -7,9 +7,8 @@
 The project includes a SQL file, [userdb.sql](https://github.com/dvanauken/sb-jpa-h2/blob/main/userdb.sql), which provides the Data Definition Language (DDL) for setting up the necessary database structure.
 
 ## To Start H2:
-C:\Program Files (x86)\H2\bin>java -cp h2-2.1.214.jar
-or
-C:\>java -cp "C:\Program Files (x86)\H2\bin\h2-2.1.214.jar" org.h2.tools.Server
+- C:\Program Files (x86)\H2\bin>java -cp h2-2.1.214.jar
+- C:\>java -cp "C:\Program Files (x86)\H2\bin\h2-2.1.214.jar" org.h2.tools.Server
 
 ## Stopping H2 Database on Windows
 
